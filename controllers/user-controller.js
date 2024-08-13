@@ -1,4 +1,6 @@
+
 const userSchema = require("../models/user-model");
+const {getError} = require("../middleware/errorThow");
 
 const getUser = async (req,res) => {
     const page = req.query.page * 1;
@@ -13,22 +15,17 @@ const getUser = async (req,res) => {
 };
 
 const userCreate = async (req,res)=>{
-    const username = req.body.username;
-    const email = req.body.email;
-    const user = await userSchema.create({
-        username,email
-    });
-    // res.send(user);
-    res.json({message:"user created",user});
+    try {
+        const username = req.body.username;
+        const email = req.body.email;
+        const user = await userSchema.create({
+            username, email
+        });
+        res.json({ message: "user created", user });
+    } catch (error) {
+        getError(error,res);
+    }
+    
 }
-// const userCreate = async (req, res) => {
-//     try {
-//         const { username, email } = req.body;
-//         const user = await User.create({ username, email });
-//         res.status(201).json({ message: 'User created', user });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Error creating user', error });
-//     }
-// };
 
 module.exports = {getUser,userCreate};
