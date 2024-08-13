@@ -14,10 +14,21 @@ const getUser = async (req,res) => {
 
 const userCreate = async (req,res)=>{
     const username = req.body.username;
+    const email = req.body.email;
     const user = await userSchema.create({
-        username    
+        username,email
     });
-    res.status(200).json({message:"user created",user});
+    // res.send(user);
+    res.json({message:"user created",user});
 }
+// const userCreate = async (req, res) => {
+//     try {
+//         const { username, email } = req.body;
+//         const user = await User.create({ username, email });
+//         res.status(201).json({ message: 'User created', user });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error creating user', error });
+//     }
+// };
 
 module.exports = {getUser,userCreate};
