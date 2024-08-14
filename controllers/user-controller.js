@@ -1,6 +1,7 @@
 
 const userSchema = require("../models/user-model");
 const {getError} = require("../middleware/errorThow");
+const multer = require('multer')
 
 const getUser = async (req,res) => {
     const page = req.query.page * 1;
@@ -15,6 +16,9 @@ const getUser = async (req,res) => {
 };
 
 const userCreate = async (req,res)=>{
+
+    res.send(req.body);
+
     try {
         const username = req.body.username;
         const email = req.body.email;
