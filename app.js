@@ -6,11 +6,9 @@ const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const path = require('path');
-// const multer = require('multer');
 const crypto = require('crypto');
 require('dotenv').config();
 const userRouter = require('./Routes/user-router');
-// const upload = multer({ dest: 'images/uploads/' })
 
 
 app.use(express.json());

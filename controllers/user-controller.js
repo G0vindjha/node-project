@@ -18,6 +18,7 @@ const getUser = async (req,res) => {
 const userCreate = async (req,res)=>{
 
     res.send(req.body);
+    
 
     try {
         const username = req.body.username;
