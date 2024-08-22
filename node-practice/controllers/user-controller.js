@@ -6,18 +6,19 @@ const { isEmpty } = require("validator");
 
 const userList = async (req, res) => {
     const {id,email,username} = req.body;
-    const { page = 1, limit = 10 } = req.params; // Default values for pagination
-    const pageNum = parseInt(page, 10);
-    const limitNum = parseInt(limit, 10);
-    if(!isEmpty(pageNum) && !isEmpty(limitNum)){
-        const page = req.params.page * 1;
-        const limit = req.params.limit * 1;
-        const skip = (page - 1) * limit;
-        const userList = await userSchema.find().limit(limit).skip(skip);
+    const { page = 1, limit = 10 } = req.query; // Default values for pagination
+    if (true) {
+        const pageNum = parseInt(page, 10);
+        const limitNum = parseInt(limit, 10);
+        // page = page *1;
+        // limit = limit *1;
+        const skip = (pageNum - 1) * limitNum;
+        const userList = await userSchema.find().limit(limitNum).skip(skip);
     }else{
         const userList = await userSchema.find();
     }
-        const userList = await userSchema.find();
+    //     const userList = await userSchema.find();
+    // res.send({'page':page,'limit':limit});
     res.send(userList);
 };
 
