@@ -5,10 +5,10 @@ const multer = require("multer");
 const {storage} = require("../middlewares/helperFunction");
 const {check, validationResult} = require("express-validator");
 const upload = multer({ storage: storage });
-const {userValidator} = require("../middlewares/user-validator"); 
+const {userValidator,validate} = require("../middlewares/user-validator"); 
 
 router.get("/", userList);
-router.get("/create",upload.single("image"),userValidator,userCreate);
+router.get("/create",upload.single("image"),userValidator,validate,userCreate);
 router.get("/update",userUpdate);
 router.get("/delete",userDelete);
 
