@@ -32,4 +32,18 @@ const encryptPassword = async (password) => {
 //         throw new Error('Password encryption failed');
 //     }
 // };
-module.exports = {storage,encryptPassword}
+
+const pagination = async (model,req) => {
+    const page = parseInt(req.query.page, 10);
+    const limit = parseInt(req.query.limit, 10);
+    const isPagination = !isNaN(page) && page > 0 && !isNaN(limit) && limit > 0;
+
+    if(isPagination) {
+        const skip = (page - 1) * limit;
+        return await model.find().limit(limit).skip(skip);
+    }else{
+        return await model.find();
+    }
+};
+
+module.exports = {storage,encryptPassword,pagination}

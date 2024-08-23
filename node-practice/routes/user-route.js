@@ -7,7 +7,7 @@ const {check, validationResult} = require("express-validator");
 const upload = multer({ storage: storage });
 const {userValidator,validate} = require("../middlewares/user-validator"); 
 
-router.get("/", userList);
+router.get("/", upload.none(),userList);
 router.get("/create",upload.single("image"),userValidator,validate,userCreate);
 router.get("/update",userUpdate);
 router.get("/delete",userDelete);

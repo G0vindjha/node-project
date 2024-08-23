@@ -1,25 +1,30 @@
 const userSchema = require("../models/user-model");
 const fs = require('fs').promises;
-const {encryptPassword} = require("../middlewares/helperFunction");
+const {encryptPassword,pagination} = require("../middlewares/helperFunction");
 const { isEmpty } = require("validator");
 
 
 const userList = async (req, res) => {
     const {id,email,username} = req.body;
-    const { page = 1, limit = 10 } = req.query; // Default values for pagination
-    if (true) {
-        const pageNum = parseInt(page, 10);
-        const limitNum = parseInt(limit, 10);
-        // page = page *1;
-        // limit = limit *1;
-        const skip = (pageNum - 1) * limitNum;
-        const userList = await userSchema.find().limit(limitNum).skip(skip);
-    }else{
-        const userList = await userSchema.find();
+    const filter = {};
+
+    if (id) {
+        filter['_id'] = id;
     }
-    //     const userList = await userSchema.find();
-    // res.send({'page':page,'limit':limit});
-    res.send(userList);
+    if (email) {
+        filter['email'] = email;
+    }
+    if (username) {
+        filter['username'] = username;
+    }
+
+    if(Object.keys(filter).length != 0){
+        const userList = await userSchema.find(filter);
+        res.send(userList);
+    }else{
+        const userList = await pagination(userSchema,req);
+        res.send(userList);
+    }
 };
 
 const userCreate = async (req, res) => {
